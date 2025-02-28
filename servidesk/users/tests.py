@@ -3,6 +3,10 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate
 from .models import CustomUser
 
+from rest_framework.test import APITestCase, APIClient
+from rest_framework import status
+from django.urls import reverse
+
 class CustomUserTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -203,3 +207,71 @@ class CustomUserTests(TestCase):
             rol=CustomUser.ADMINISTRADOR
         )
         self.assertEqual(str(user_admin), 'admin@example.com (Administrador)', "La representación en cadena del administrador no coincide")
+
+class UserAPITests(APITestCase):
+    def setUp(self):
+        """
+        Configuración inicial para las pruebas de API.
+        """
+        self.client = APIClient()
+        self.register_url = reverse('register')  # Nombre de la URL definida en urls.py
+        self.user_data = {
+            'email': 'test@example.com',
+            'password': 'password123',
+            'first_name': 'Test',
+            'last_name': 'User',
+            'rol': 'C',  # Cliente
+        }
+
+    def test_user_registration(self):
+        """
+        Prueba que un usuario pueda registrarse correctamente a través de la API.
+        """
+        response = self.client.post(self.register_url, self.user_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(CustomUser.objects.count(), 1)
+        self.assertEqual(CustomUser.objects.get().email, 'test@example.com')
+
+    def test_user_registration_with_missing_fields(self):
+        """
+        Prueba que la creación de un usuario falle si faltan campos obligatorios.
+        """
+        incomplete_data = {
+            'email': 'test@example.com',
+            'password': 'password123',
+            # Faltan first_name, last_name y rol
+        }
+        response = self.client.post(self.register_url, incomplete_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('first_name', response.data)  # Verifica que se reporte el error
+        self.assertIn('last_name', response.data)  # Verifica que se reporte el error
+        self.assertIn('rol', response.data)  # Verifica que se reporte el error
+
+    def test_get_user_profile(self):
+        """
+        Prueba que un usuario autenticado pueda obtener su perfil a través de la API.
+        """
+        # Crear y autenticar un usuario
+        user = CustomUser.objects.create_user(
+            email='test@example.com',
+            password='password123',
+            first_name='Test',
+            last_name='User',
+            rol='C',  # Cliente
+        )
+        self.client.force_authenticate(user=user)  # Autentica al usuario
+
+        # Obtener el perfil del usuario
+        profile_url = reverse('profile')  # Nombre de la URL definida en urls.py
+        response = self.client.get(profile_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['email'], 'test@example.com')
+        self.assertEqual(response.data['first_name'], 'Test')
+
+    def test_get_user_profile_unauthenticated(self):
+        """
+        Prueba que un usuario no autenticado no pueda obtener su perfil.
+        """
+        profile_url = reverse('profile')  # Nombre de la URL definida en urls.py
+        response = self.client.get(profile_url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
