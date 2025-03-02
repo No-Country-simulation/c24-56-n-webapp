@@ -7,6 +7,7 @@
 *.pyc
 __pycache__/
 local_settings.py
+
 db.sqlite3
 db.sqlite3-journal
 media
@@ -172,3 +173,4 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+servidesk/db_dev.sqlite3
