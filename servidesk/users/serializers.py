@@ -41,3 +41,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
             instance.set_password(validated_data['password'])
         instance.save()
         return instance
+    
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class EmailVerificationSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    uid = serializers.CharField()

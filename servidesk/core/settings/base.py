@@ -44,6 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'corsheaders',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.facebook',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Autenticación normal
+    'allauth.account.auth_backends.AuthenticationBackend',  # Autenticación de allauth
 ]
 
 MIDDLEWARE = [
@@ -55,7 +67,33 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'APP': {
+#             'client_id': 'YOUR_CLIENT_ID',
+#             'secret': 'YOUR_CLIENT_SECRET',
+#             'key': ''
+#         }
+#     },
+#     'facebook': {
+#         'APP': {
+#             'client_id': 'YOUR_CLIENT_ID',
+#             'secret': 'YOUR_CLIENT_SECRET',
+#             'key': ''
+#         }
+#     }
+# }
+
+SOCIALACCOUNT_ADAPTER = 'users.adapters.CustomSocialAccountAdapter'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED=False
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE=True
+ACCOUNT_UNIQUE_EMAIL=True
+ACCOUNT_LOGIN_METHODS=["email"]
 
 ROOT_URLCONF = 'core.urls'
 
@@ -88,6 +126,7 @@ DATABASES = {
     }
 }
 
+SITE_ID = 1
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -147,3 +186,5 @@ REST_FRAMEWORK = {
     ],
     'EXCEPTION_HANDLER': 'users.exceptions.exception_handler',
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
