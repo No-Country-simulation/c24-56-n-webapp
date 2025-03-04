@@ -70,3 +70,17 @@ Para mantener un flujo de trabajo ordenado, el proyecto usa las siguientes ramas
 
 Este documento ayudará a organizar el desarrollo del proyecto, asegurando una colaboración eficiente y un código limpio. 🚀
 
+Pantalla de inicio de sesion
+![Inicio_de_sesion](/frontend/img/image.png)
+
+Pantalla de recuperacion contraseña
+![Recuperacion_contraseña](/frontend/img/image-1.png)
+
+Pantalla registro de usuario
+![Registro_de_usuario](/frontend/img/image-2.png)
+
+Dashboard Cliente
+![Dashboard_cliente](/frontend/img/image-3.png)
+
+Pantalla ticket
+![Pantalla_ticket](/frontend/img/image-4.png)
