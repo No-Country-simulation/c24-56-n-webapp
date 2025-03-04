@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="../assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Dashboard Cliente · Bootstrap v5.3</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">ServiDesk</a>
+      <ul class="navbar-nav flex-row d-md-none">
+        <li class="nav-item text-nowrap">
+          <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+            <svg class="bi"><use xlink:href="#search"/></svg>
+          </button>
+        </li>
+        <li class="nav-item text-nowrap">
+          <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <svg class="bi"><use xlink:href="#list"/></svg>
+          </button>
+        </li>
+      </ul>
+      <div id="navbarSearch" class="navbar-search w-100 collapse">
+        <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+      </div>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+          <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="sidebarMenuLabel">Company name</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+              <ul class="nav flex-column">
+               
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" href="index_cliente.html">
+                    <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                    Nuevo Ticket
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" href="historico_cliente.html">
+                    <i class="bi bi-folder2-open"></i>
+                    Historico de Tickets
+                  </a>
+                </li>
+              </ul>
+              <hr class="my-3">
+              <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <svg class="bi"><use xlink:href="#door-closed"/></svg>
+                    Sign out
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard Cliente #1000 #Juan Perez</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group me-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="form-container">
+              <h2 class="text-center mb-4">Reportar Incidencia</h2>
+              <form id="incidentForm">
+                <div class="mb-3">
+                  <label for="title" class="form-label">Título:</label>
+                  <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                  <label for="fecha" class="form-label">Fecha:</label>
+                  <input type="date" class="form-control" id="fecha" name="fecha" required>
+                </div>
+                <div class="mb-3">
+                  <label for="categoria" class="form-label">Categoría:</label>
+                  <select class="form-select" id="categoria" name="categoria" required>
+                    <option value="software">Software</option>
+                    <option value="hardware">Hardware</option>
+                    <option value="periferico">Periférico</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Descripción:</label>
+                  <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="file" class="form-label">Cargar archivo:</label>
+                  <input class="custom-file-input form-control" type="file" id="file" name="file" accept="image/*,.pdf,.doc,.docx">
+                  <div id="fileNameDisplay" class="mt-2"></div>
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+              </form>
+              <div class="success-message" id="successMsg">
+                ✅ Formulario enviado correctamente!
+              </div>
+            </div>
+     
+   
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/frontend/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+/* globals Chart:false */
+
+(() => {
+  'use strict'
+
+  // Gráficos
+  const ctx = document.getElementById('myChart');
+  // eslint-disable-next-line no-unused-vars
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
+      ],
+      datasets: [{
+        data: [
+          15339,
+          21345,
+          18483,
+          24003,
+          23489,
+          24092,
+          12034
+        ],
+        lineTension: 0,
+        backgroundColor: 'transparent',
+        borderColor: '#007bff',
+        borderWidth: 4,
+        pointBackgroundColor: '#007bff'
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          boxPadding: 3
+        }
+      }
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Cargar incidencias
+    cargarIncidencias();
+
+    // Manejar el formulario de cambio de estado
+    document.getElementById('estadoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      // Lógica para cambiar el estado de la incidencia
+      const nuevoEstado = document.getElementById('estado').value;
+      // Aquí deberías agregar la lógica para actualizar el estado en el servidor
+      alert('Estado cambiado a: ' + nuevoEstado);
+      $('#estadoModal').modal('hide');
+    });
+
+    // Manejar el formulario de respuesta a clientes
+    document.getElementById('respuestaForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      // Lógica para enviar la respuesta al cliente
+      const respuesta = document.getElementById('respuesta').value;
+      // Aquí deberías agregar la lógica para enviar la respuesta al servidor
+      alert('Respuesta enviada: ' + respuesta);
+      $('#respuestaModal').modal('hide');
+    });
+
+    // Cargar desempeño del técnico
+    cargarDesempeno();
+  });
+
+  function cargarIncidencias() {
+    // Simulación de carga de incidencias
+    const incidencias = [
+      { id: 1, titulo: 'Problema con la conexión', estado: 'recibida', fecha: '2025-03-01' },
+      { id: 2, titulo: 'Error en el sistema', estado: 'en_proceso', fecha: '2025-03-02' },
+      { id: 3, titulo: 'Solicitud de soporte', estado: 'cerrada', fecha: '2025-03-03' }
+    ];
+
+    const tbody = document.getElementById('incidenciasTable');
+    incidencias.forEach(incidencia => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${incidencia.id}</td>
+        <td>${incidencia.titulo}</td>
+        <td>${incidencia.estado}</td>
+        <td>${incidencia.fecha}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" onclick="abrirModalEstado(${incidencia.id})">Cambiar Estado</button>
+          <button class="btn btn-sm btn-secondary" onclick="abrirModalRespuesta(${incidencia.id})">Responder</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  window.abrirModalEstado = function(id) {
+    // Lógica para abrir el modal de cambio de estado
+    $('#estadoModal').modal('show');
+  }
+
+  window.abrirModalRespuesta = function(id) {
+    // Lógica para abrir el modal de respuesta a clientes
+    $('#respuestaModal').modal('show');
+  }
+
+  function cargarDesempeno() {
+    // Simulación de carga de desempeño del técnico
+    const incidenciasResueltas = 10; // Número de incidencias resueltas
+    const tiempoPromedioResolucion = 5; // Tiempo promedio de resolución en horas
+
+    document.getElementById('incidenciasResueltas').textContent = incidenciasResueltas;
+    document.getElementById('tiempoPromedioResolucion').textContent = `${tiempoPromedioResolucion} horas`;
+  }
+})()
