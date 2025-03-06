@@ -6,5 +6,5 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
         user = super().populate_user(request, sociallogin, data)
         user.first_name = data.get('first_name', '')
         user.last_name = data.get('last_name', '')
-        user.rol = CustomUser.CLIENTE  # Asigna un rol predeterminado o basado en la lógica
+        user.rol = CustomUser.CLIENTE  # Asigna un rol predeterminado
         return user

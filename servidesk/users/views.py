@@ -1,8 +1,8 @@
 from django.core.mail import send_mail
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -11,24 +11,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import CustomUser
 from .serializers import CustomUserSerializer, EmailVerificationSerializer, PasswordResetSerializer
-
-
-@api_view(['POST'])
-def login_view(request):
-    """Inicia sesión y devuelve tokens JWT si las credenciales son válidas."""
-    email = request.data.get('email')
-    password = request.data.get('password')
-    user = authenticate(request, email=email, password=password)
-
-    if user is not None:
-        refresh = RefreshToken.for_user(user)
-        return Response({
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        })
-    
-    return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -56,9 +38,24 @@ def register_view(request):
         )
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+def login_view(request):
+    """Inicia sesión y devuelve tokens JWT si las credenciales son válidas."""
+    email = request.data.get('email')
+    password = request.data.get('password')
+    user = authenticate(request, email=email, password=password)
+
+    if user is not None:
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
+
+    return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -67,14 +64,6 @@ def user_profile_view(request):
     user = request.user
     serializer = CustomUserSerializer(user)
     return Response(serializer.data)
-
-
-@api_view(['GET'])
-def unauthenticated_profile_view(request):
-    """Prueba de acceso no autenticado."""
-    return Response({'detail': 'Authentication credentials were not provided.'},
-                    status=status.HTTP_401_UNAUTHORIZED)
-
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -102,10 +91,6 @@ def password_reset_view(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth import get_user_model
-
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def email_verification_view(request):
@@ -114,17 +99,15 @@ def email_verification_view(request):
 
     if serializer.is_valid():
         token = serializer.validated_data['token']
-        uidb64 = serializer.validated_data['uid']  # Asegúrate de incluir 'uid' en el serializer
+        uidb64 = serializer.validated_data['uid']
 
         try:
-            # Decodificar el UID
             uid = urlsafe_base64_decode(uidb64).decode()
             User = get_user_model()
             user = User.objects.get(pk=uid)
 
-            # Verificar el token
             if default_token_generator.check_token(user, token):
-                user.is_active = True  # Activar la cuenta
+                user.is_active = True
                 user.save()
                 return Response({'detail': 'Correo verificado con éxito'}, status=status.HTTP_200_OK)
             else:

@@ -5,7 +5,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     """
     Serializador para el modelo CustomUser.
     """
-    password = serializers.CharField(write_only=True)  # Asegúrate de incluir el campo password
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = CustomUser
@@ -41,7 +41,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             instance.set_password(validated_data['password'])
         instance.save()
         return instance
-    
+
 class PasswordResetSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
