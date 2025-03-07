@@ -105,3 +105,34 @@ document.getElementById('incidentForm').addEventListener('submit', function(e) {
 });
 
 window.onload = actualizarTabla;
+
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  // Aquí deberías agregar la lógica para registrar al usuario
+  // Por ejemplo, podrías hacer una llamada AJAX a tu servidor para registrar al usuario
+
+  // Simulación de registro de usuario
+  var userName = document.getElementById('floatingName').value;
+  var userEmail = document.getElementById('floatingEmail').value;
+  var userPassword = document.getElementById('floatingPassword').value;
+  var userConfirmPassword = document.getElementById('floatingConfirmPassword').value;
+  var userRole = document.getElementById('floatingRole').value;
+
+  if (userPassword !== userConfirmPassword) {
+    alert('Passwords do not match');
+    return;
+  }
+
+  // Aquí puedes agregar la lógica para guardar los datos del usuario en tu servidor
+
+  // Redirigir al usuario a la página correspondiente después del registro
+  if (userRole === 'Administrador') {
+    window.location.href = '/frontend/dashboard_administrador/index_administrador.html';
+  } else if (userRole === 'Tecnico') {
+    window.location.href = '/frontend/dashboard_tecnico/index_tecnico.html';
+  } else if (userRole === 'Cliente') {
+    window.location.href = '/frontend/dashboard_cliente/index_cliente.html';
+  } else {
+    window.location.href = '/frontend/sign-in/index.html';
+  }
+});

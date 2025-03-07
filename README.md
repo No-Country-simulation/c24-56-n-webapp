@@ -9,21 +9,33 @@ Las soluciones SaaS permiten a los usuarios acceder a aplicaciones basadas en la
 
 ```
 📦 Proyecto
-├── 📂 assets/          # Contiene imágenes, fuentes e íconos.
-├── 📂 components/      # Componentes reutilizables (botones, formularios, etc.).
-├── 📂 css/             # css.
-│   ├── bootstrap.min.css   # Archivo de bootstrap (tema).
-│   ├── style.css       #Archivo estilos css.
-├── 📂 public/          # Archivos públicos accesibles, como index.html.
-│   ├── index.html      # Archivo HTML principal de la aplicación.
-├── 📂 styles/          # Contiene los archivos de estilos (CSS/Sass).
-│   ├── style.scss      # Archivo principal de estilos con Sass.
-│   ├── _variables.scss  #Archivo variables
-├── 📂 views/           # Plantillas de la interfaz de usuario.
-├── 📂 scripts/         # Contiene los archivos de lógica del frontend.
-│   ├── script_index.js # Archivo JavaScript principal.
-│   ├── script_login.js # Script de manejo de autenticación/login.
-└── README.md           # Documentación del proyecto.
+├── 📂 assets/                      # Contiene imágenes, fuentes e íconos.
+├── 📂 dashboard administrador/     # Dashboard adminstrador
+│   ├── dashboard.css
+│   ├── dashboard.js
+│   ├── dashboard.rtl.css 
+│   ├── index_adminstrador.html
+├── 📂 dashboard cliente/           # Dashboard cliente
+│   ├── dashboard.css
+│   ├── dashboard.js
+│   ├── dashboard.rtl.css 
+│   ├── index_cliente.html
+├── 📂 dashboard tecnico/            # Dashboard tecnico
+│   ├── dashboard.css
+│   ├── dashboard.js
+│   ├── dashboard.rtl.css 
+│   ├── index_tecnico.html
+├── 📂 img/                          # imagenes
+├── 📂 recovey/                      # Recuperar contraseña.
+│   ├── index.html
+│   ├── sign-in.css                    #Archivo estilos css.
+├── 📂 register-in/                   # Registro de roles.
+│   ├── index.html
+│   ├── sign-in.css                    #Archivo estilos css.
+├── 📂 sign-in/                        # Inicio de Sesion.
+│   ├── index.html
+│   ├── sign-in.css                    #Archivo estilos css.
+└── README.md                          # Documentación del proyecto.
 ```
 
 ## 🌿 Ramas del Repositorio
@@ -34,15 +46,15 @@ Para mantener un flujo de trabajo ordenado, el proyecto usa las siguientes ramas
 - Es la rama principal y estable.
 - Contiene la versión en producción del proyecto.
 
-### 🔹 `develop`
+### 🔹 `develop` Silvia
 - Rama de desarrollo principal.
 - Aquí se integran nuevas funcionalidades antes de pasarlas a `main`.
 
-### 🔹 `feature/frontend-fixes`
+### 🔹 `feature/frontend-fixes` Yaneth
 - Se usa para corregir errores en la interfaz de usuario.
 - Se fusiona en `develop` una vez validados los cambios.
 
-### 🔹 `feature/ui-improvements`
+### 🔹 `feature/ui-improvements` Javiera
 - Rama destinada a mejoras en el diseño y experiencia de usuario.
 - Incluye optimización de estilos, animaciones, etc.
 
@@ -71,13 +83,13 @@ Para mantener un flujo de trabajo ordenado, el proyecto usa las siguientes ramas
 Este documento ayudará a organizar el desarrollo del proyecto, asegurando una colaboración eficiente y un código limpio. 🚀
 
 Pantalla de inicio de sesion
-![Inicio_de_sesion](/frontend/img/image.png)
+![Inicio_de_sesion](/frontend/img/Inicio%20de%20Sesion.png)
 
 Pantalla de recuperacion contraseña
-![Recuperacion_contraseña](/frontend/img/image-1.png)
+![Recuperacion_contraseña](/frontend/img/Recuperar.png)
 
 Pantalla registro de usuario
-![Registro_de_usuario](/frontend/img/image-2.png)
+![Registro_de_usuario](/frontend/img/Registrarse.png)
 
 Dashboard Cliente
 ![Dashboard_cliente](/frontend/img/image-3.png)
