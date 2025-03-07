@@ -1,121 +1,39 @@
-/* globals Chart:false */
+//////a partir de aca lo estoy revisando al index_tecnico.htm
+// // 8. Sección para ver desempeño y tiempo promedio de resolución
+//este Script consume datos de la tabla
+//Script para actualizar datos dinámicamente 
+  async function actualizarDesempeño() {
+    try {
+      // Simulación de datos obtenidos desde una API (Base de Datos)
+      const response = await fetch("https://tu-api.com/incidencias");
+      const datos = await response.json();
 
-(() => {
-  'use strict'
+      // Extraer datos
+      const pendientes = datos.filter(i => i.estado === "pendiente").length;
+      const enProgreso = datos.filter(i => i.estado === "en progreso").length;
+      const resueltas = datos.filter(i => i.estado === "resuelta").length;
 
-  // Gráficos
-  const ctx = document.getElementById('myChart');
-  // eslint-disable-next-line no-unused-vars
-  const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
-      ],
-      datasets: [{
-        data: [
-          15339,
-          21345,
-          18483,
-          24003,
-          23489,
-          24092,
-          12034
-        ],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          boxPadding: 3
-        }
-      }
+      // Calcular tiempo promedio de resolución
+      const tiempos = datos
+        .filter(i => i.estado === "resuelta")
+        .map(i => i.tiempoResolucion); // Array con los tiempos de resolución
+
+      const tiempoPromedio = tiempos.length > 0 
+        ? (tiempos.reduce((a, b) => a + b, 0) / tiempos.length).toFixed(2) 
+        : 0;
+
+      // Actualizar HTML
+      document.getElementById("incidenciasPendientes").textContent = pendientes;
+      document.getElementById("incidenciasenProgreso").textContent = enProgreso;
+      document.getElementById("incidenciasResueltas").textContent = resueltas;
+      document.getElementById("tiempoPromedioResolucion").textContent = `${tiempoPromedio} horas`;
+
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
     }
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // Cargar incidencias
-    cargarIncidencias();
-
-    // Manejar el formulario de cambio de estado
-    document.getElementById('estadoForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      // Lógica para cambiar el estado de la incidencia
-      const nuevoEstado = document.getElementById('estado').value;
-      // Aquí deberías agregar la lógica para actualizar el estado en el servidor
-      alert('Estado cambiado a: ' + nuevoEstado);
-      $('#estadoModal').modal('hide');
-    });
-
-    // Manejar el formulario de respuesta a clientes
-    document.getElementById('respuestaForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      // Lógica para enviar la respuesta al cliente
-      const respuesta = document.getElementById('respuesta').value;
-      // Aquí deberías agregar la lógica para enviar la respuesta al servidor
-      alert('Respuesta enviada: ' + respuesta);
-      $('#respuestaModal').modal('hide');
-    });
-
-    // Cargar desempeño del técnico
-    cargarDesempeno();
-  });
-
-  function cargarIncidencias() {
-    // Simulación de carga de incidencias
-    const incidencias = [
-      { id: 1, titulo: 'Problema con la conexión', estado: 'recibida', fecha: '2025-03-01' },
-      { id: 2, titulo: 'Error en el sistema', estado: 'en_proceso', fecha: '2025-03-02' },
-      { id: 3, titulo: 'Solicitud de soporte', estado: 'cerrada', fecha: '2025-03-03' }
-    ];
-
-    const tbody = document.getElementById('incidenciasTable');
-    incidencias.forEach(incidencia => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${incidencia.id}</td>
-        <td>${incidencia.titulo}</td>
-        <td>${incidencia.estado}</td>
-        <td>${incidencia.fecha}</td>
-        <td>
-          <button class="btn btn-sm btn-primary" onclick="abrirModalEstado(${incidencia.id})">Cambiar Estado</button>
-          <button class="btn btn-sm btn-secondary" onclick="abrirModalRespuesta(${incidencia.id})">Responder</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
   }
 
-  window.abrirModalEstado = function(id) {
-    // Lógica para abrir el modal de cambio de estado
-    $('#estadoModal').modal('show');
-  }
+  // Actualizar cada 10 segundos
+  setInterval(actualizarDesempeño, 10000);
+  actualizarDesempeño(); // Llamada inicial
 
-  window.abrirModalRespuesta = function(id) {
-    // Lógica para abrir el modal de respuesta a clientes
-    $('#respuestaModal').modal('show');
-  }
-
-  function cargarDesempeno() {
-    // Simulación de carga de desempeño del técnico
-    const incidenciasResueltas = 10; // Número de incidencias resueltas
-    const tiempoPromedioResolucion = 5; // Tiempo promedio de resolución en horas
-
-    document.getElementById('incidenciasResueltas').textContent = incidenciasResueltas;
-    document.getElementById('tiempoPromedioResolucion').textContent = `${tiempoPromedioResolucion} horas`;
-  }
-})()
