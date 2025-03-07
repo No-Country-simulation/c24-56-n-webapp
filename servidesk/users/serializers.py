@@ -9,11 +9,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'rol']
+        fields = ['id', 'email', 'username', 'password', 'first_name', 'last_name', 'rol']
         extra_kwargs = {
+            'email': {'required': True},
             'first_name': {'required': True},
             'last_name': {'required': True},
             'rol': {'required': True},
+            'username': {'required': False},  # Opcional si decides mantenerlo
         }
 
     def create(self, validated_data):
@@ -26,6 +28,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             rol=validated_data['rol'],
+            username=validated_data.get('username', None),  # Manejo opcional
         )
         return user
 
@@ -34,9 +37,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
         Actualiza y retorna un usuario existente con los datos validados.
         """
         instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)  # Manejo opcional
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.rol = validated_data.get('rol', instance.rol)
+
         if 'password' in validated_data:
             instance.set_password(validated_data['password'])
         instance.save()

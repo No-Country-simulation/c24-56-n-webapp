@@ -13,7 +13,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('El nombre es obligatorio')
         if not extra_fields.get('last_name'):
             raise ValueError('El apellido es obligatorio')
-        if not extra_fields.get('rol'):
+        if 'rol' not in extra_fields:
             raise ValueError('El rol es obligatorio')
 
         # Validar que el rol sea uno de los valores permitidos
@@ -52,15 +52,14 @@ class CustomUser(AbstractUser):
         (ADMINISTRADOR, 'Administrador'),
     ]
 
-    username = None  # Elimina el campo username
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=False, blank=False)
 
-    USERNAME_FIELD = 'email'  # Usa el email como identificador único
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'rol']
 
     rol = models.CharField(max_length=20, choices=ROL_CHOICES, default=CLIENTE)
 
-    objects = CustomUserManager()  # Usa el UserManager personalizado
+    objects = CustomUserManager()
 
     def clean(self):
         """

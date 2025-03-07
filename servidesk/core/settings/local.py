@@ -9,5 +9,5 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 DATABASES['default']['NAME'] = BASE_DIR / 'db_dev.sqlite3'
 
 # Configuración de correo para desarrollo (usar consola)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
