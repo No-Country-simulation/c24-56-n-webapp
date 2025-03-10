@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CustomUserSerializer
 
-# @api_view(['POST'])
+@api_view(['POST'])
 def login_view(request):
     email = request.data.get('email')
     password = request.data.get('password')
@@ -20,7 +20,7 @@ def login_view(request):
     else:
         return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['POST'])
+@api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
     serializer = CustomUserSerializer(data=request.data)
@@ -29,7 +29,7 @@ def register_view(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['GET'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_profile_view(request):
     """
@@ -42,7 +42,7 @@ def user_profile_view(request):
     serializer = CustomUserSerializer(user)
     return Response(serializer.data)
 
-# @api_view(['GET'])
+@api_view(['GET'])
 def unauthenticated_profile_view(request):
     """
     View para probar el acceso no autenticado.

@@ -1,10 +1,10 @@
-from .views import TicketListCreate
 from django.urls import path
+from .views import ticket_list, ticket_create, ticket_detail
 
 app_name = 'tickets'
 
 urlpatterns = [
-    # path('', views.index, name='tickets_index'),
-    # path("crear/", views.crear_ticket, name="tickets_crear"),
-    path('crear/', TicketListCreate.as_view(), name='ticket-list-create'),
+    path('', ticket_list, name='ticket-list'),
+    path('crear/', ticket_create, name='ticket-create'),
+    path('<int:pk>/', ticket_detail, name='ticket-detail'),
 ]

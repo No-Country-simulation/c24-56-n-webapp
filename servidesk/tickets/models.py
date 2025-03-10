@@ -13,9 +13,9 @@ class Ticket(models.Model):
     ]
 
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
-    # importar de usuario
+    # importar de usuario esperar a Allan
     cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tickets_creados')
-    # importar de tecnico
+    # importar de tecnico esperar a Allan
     tecnico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.SET_NULL, related_name='tickets_asignados', null = True, blank= True)
     fecha_creacion = models.DateTimeField(auto_now_add = True)
     fecha_actualizacion = models.DateTimeField(auto_now = True)
