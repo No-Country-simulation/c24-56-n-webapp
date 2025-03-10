@@ -1,63 +1,55 @@
+from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 from .models import CustomUser
-from allauth.account.utils import send_email_confirmation
-from allauth.account.models import EmailAddress
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    """
-    Serializador para el modelo CustomUser.
-    """
-    password = serializers.CharField(write_only=True)
-    password_confirmation = serializers.CharField(write_only=True)
-
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'rol']
-        extra_kwargs = {
-            'email': {'required': True},
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-            'rol': {'required': True},
-        }
+        fields = ('id', 'email', 'first_name', 'last_name', 'phone', 'role', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
-    def validate_rol(self, rol):
-        valid_roles = [choice[0] for choice in CustomUser.ROL_CHOICES]
-        if rol not in valid_roles:
-            raise serializers.ValidationError("El rol no es válido.")
-        return rol
-    
-    def validate_email(self, email):
-        if EmailAddress.objects.filter(email=email, verified=True).exists():
-            raise serializers.ValidationError("Este correo ya está en uso.")
-        return email
-
-    def validate(self, attrs):
-        # Validar que las contraseñas coincidan
-        if attrs['password'] != attrs['password_confirmation']:
-            raise serializers.ValidationError("Las contraseñas no coinciden.")
-        return attrs
+    def validate_role(self, value):
+        if value not in dict(CustomUser.ROLE_CHOICES).keys():
+            raise serializers.ValidationError("Rol no válido.")
+        return value
 
     def create(self, validated_data):
-        # Eliminar la confirmación de contraseña antes de crear el usuario
-        validated_data.pop('password_confirmation')
-        user = CustomUser.objects.create_user(
-            email=validated_data['email'],
-            password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            rol=validated_data['rol'],
-        )
-        # Enviar correo de confirmación
-        send_email_confirmation(self.context['request'], user)
+        user = CustomUser.objects.create_user(**validated_data)
         return user
 
-    def update(self, instance, validated_data):
-        instance.email = validated_data.get('email', instance.email)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.rol = validated_data.get('rol', instance.rol)
+class CustomRegisterSerializer(RegisterSerializer):
+    # Elimina el campo 'username' del formulario de registro
+    username = None
 
-        if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
-        instance.save()
-        return instance
+    # Define los campos personalizados que necesitas
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    phone = serializers.CharField(required=True)
+    role = serializers.CharField(required=True)
+
+    def validate_role(self, value):
+        if value not in dict(CustomUser.ROLE_CHOICES).keys():
+            raise serializers.ValidationError("Rol no válido.")
+        return value
+
+    def get_cleaned_data(self):
+        data = super().get_cleaned_data()
+        data.update({
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
+            'phone': self.validated_data.get('phone', ''),
+            'role': self.validated_data.get('role', ''),
+        })
+        return data
+    
+    def save(self, request):
+        logger.info("Llamando al método save del serializador personalizado")
+        logger.info(f"Datos limpios: {self.get_cleaned_data()}")
+        logger.info(f"Request: {request}")
+        user = super().save(request)
+        logger.info(f"Usuario creado: {user}")
+        logger.info(f"¿Correo de verificación enviado? {user.emailaddress_set.exists()}")
+        return user

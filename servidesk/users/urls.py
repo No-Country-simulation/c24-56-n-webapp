@@ -10,7 +10,7 @@ from dj_rest_auth.registration.views import (
 
 from users.views import email_confirm_redirect, password_reset_confirm_redirect
 urlpatterns = [
-    path("register/", RegisterView.as_view(), name="rest_register"),
+    path("register/", CustomRegisterView.as_view(), name="rest_register"),
     path("login/", LoginView.as_view(), name="rest_login"),
     path("logout/", LogoutView.as_view(), name="rest_logout"),
     # path("details/", UserDetailsView.as_view(), name="rest_user_details"),

@@ -7,6 +7,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CustomUserSerializer
 from dj_rest_auth.registration.views import RegisterView
 
+from django.conf import settings
+from django.http import HttpResponseRedirect
+
+from .serializers import CustomRegisterSerializer
+
+import logging
+
+logger = logging.getLogger(__name__)
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_profile_view(request):
@@ -20,16 +29,13 @@ def user_profile_view(request):
     serializer = CustomUserSerializer(user)
     return Response(serializer.data)
 
-from django.conf import settings
-from django.http import HttpResponseRedirect
-
-from .serializers import CustomUserSerializer
-
 class CustomRegisterView(RegisterView):
-    serializer_class = CustomUserSerializer
+    serializer_class = CustomRegisterSerializer
 
     def perform_create(self, serializer):
-        user = serializer.save()
+        logger.info(f"Request: {self.request}")
+        user = serializer.save(request=self.request)
+        logger.info(f"User created: {user}")
         return user
 
 def email_confirm_redirect(request, key):

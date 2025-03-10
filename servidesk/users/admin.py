@@ -6,18 +6,18 @@ class CustomUserAdmin(UserAdmin):
     """
     Configuración personalizada para el modelo CustomUser en el panel de administración.
     """
-    list_display = ('email', 'first_name', 'last_name', 'rol', 'is_staff', 'is_superuser')
-    list_filter = ('rol', 'is_staff', 'is_superuser')
+    list_display = ('email', 'first_name', 'last_name', 'role', 'phone', 'is_staff', 'is_superuser')
+    list_filter = ('role', 'is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Información Personal', {'fields': ('first_name', 'last_name', 'rol')}),
+        ('Información Personal', {'fields': ('first_name', 'last_name', 'role')}),
         ('Permisos', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Fechas Importantes', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'rol', 'password1', 'password2'),
+            'fields': ('email', 'first_name', 'last_name', 'role', 'phone', 'password1', 'password2'),
         }),
     )
     search_fields = ('email', 'first_name', 'last_name')
