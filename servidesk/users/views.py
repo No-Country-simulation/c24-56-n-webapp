@@ -5,6 +5,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import CustomUserSerializer
+from dj_rest_auth.registration.views import RegisterView
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -21,6 +22,15 @@ def user_profile_view(request):
 
 from django.conf import settings
 from django.http import HttpResponseRedirect
+
+from .serializers import CustomUserSerializer
+
+class CustomRegisterView(RegisterView):
+    serializer_class = CustomUserSerializer
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        return user
 
 def email_confirm_redirect(request, key):
     return HttpResponseRedirect(

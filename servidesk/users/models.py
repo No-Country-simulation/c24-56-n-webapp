@@ -4,9 +4,6 @@ from django.core.exceptions import ValidationError
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        """
-        Crea y guarda un usuario con el email y la contraseña proporcionados.
-        """
         if not email:
             raise ValueError('El email es obligatorio')
         if not extra_fields.get('first_name'):
@@ -16,30 +13,16 @@ class CustomUserManager(BaseUserManager):
         if 'rol' not in extra_fields:
             raise ValueError('El rol es obligatorio')
 
-        # Validar que el rol sea uno de los valores permitidos
-        valid_roles = [choice[0] for choice in CustomUser.ROL_CHOICES]
-        if extra_fields.get('rol') not in valid_roles:
-            raise ValueError('El rol no es válido')
-
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
+
+        if password:
+            user.set_password(password)
+        else:
+            raise ValueError('La contraseña es obligatoria')
+
         user.save(using=self._db)
         return user
-
-    def create_superuser(self, email, password=None, **extra_fields):
-        """
-        Crea y guarda un superusuario con el email y la contraseña proporcionados.
-        """
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('El superusuario debe tener is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('El superusuario debe tener is_superuser=True.')
-
-        return self.create_user(email, password, **extra_fields)
 
 class CustomUser(AbstractUser):
     CLIENTE = 'C'
@@ -53,18 +36,14 @@ class CustomUser(AbstractUser):
     ]
 
     email = models.EmailField(unique=True, null=False, blank=False)
+    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default=CLIENTE)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'rol']
 
-    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default=CLIENTE)
-
     objects = CustomUserManager()
 
     def clean(self):
-        """
-        Valida que el rol sea uno de los valores permitidos.
-        """
         super().clean()
         valid_roles = [choice[0] for choice in self.ROL_CHOICES]
         if self.rol not in valid_roles:
