@@ -1,354 +1,310 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
-  <head>
-    <!-- 1. Script para manejar los modos de color -->
-    <script src="../assets/js/color-modes.js"></script>
-    <!-- 1. Script para manejar el GRAFICO -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 2. Metadatos de la página -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Hugo 0.122.0" />
-    <!-- 3. Título de la página -->
-    <title>Dashboard Técnico · Bootstrap v5.3</title>
-    <!-- 4. Enlaces a hojas de estilo y recursos externos -->
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/5.3/examples/dashboard/"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
-    />
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <link href="dashboard.css" rel="stylesheet" />
-    <link rel="stylesheet" href="dashboard.rtl.css" id="rtl-stylesheet" />
-  </head>
 
-  <body>
-    <!-- 5. Cabecera de la página -->
-    <header
-      class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
-      data-bs-theme="dark"
-    >
-      <a
-        class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
-        href="#"
-        >ServiDesk</a
-      >
-      <ul class="navbar-nav flex-row d-md-none">
-        <li class="nav-item text-nowrap"></li>
-        <li class="nav-item text-nowrap">
-          <button
-            class="nav-link px-3 text-white"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#sidebarMenu"
-            aria-controls="sidebarMenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <svg class="bi">
-              <use xlink:href="#list" />
-            </svg>
-          </button>
-        </li>
-      </ul>
-      <div id="navbarSearch" class="navbar-search w-100 collapse">
-        <input
-          class="form-control w-100 rounded-0 border-0"
-          type="text"
-          placeholder="Search"
-          aria-label="Search"
-        />
+<head>
+  <!-- 1. Script para manejar los modos de color -->
+  <script src="../assets/js/color-modes.js"></script>
+  <!-- 1. Script para manejar el GRAFICO -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- 2. Metadatos de la página -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+  <meta name="generator" content="Hugo 0.122.0" />
+  <!-- 3. Título de la página -->
+  <title>Dashboard Técnico · Bootstrap v5.3</title>
+  <!-- 4. Enlaces a hojas de estilo y recursos externos -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="dashboard.css" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.rtl.css" id="rtl-stylesheet" />
+</head>
+
+<body>
+  <!-- 5. Cabecera de la página -->
+  <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">ServiDesk</a>
+    <ul class="navbar-nav flex-row d-md-none">
+      <li class="nav-item text-nowrap"></li>
+      <li class="nav-item text-nowrap">
+        <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <svg class="bi">
+            <use xlink:href="#list" />
+          </svg>
+        </button>
+      </li>
+    </ul>
+    <div id="navbarSearch" class="navbar-search w-100 collapse">
+      <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search" />
+    </div>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- 6. Barra lateral de navegación -->
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
+          aria-labelledby="sidebarMenuLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"
+              aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                  <i class="bi bi-1-circle"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="incidencias_tecnico.html">
+                  <i class="bi bi-2-circle"></i>
+                  Incidencias
+                </a>
+              </li>
+            </ul>
+            <hr class="my-3" />
+            <ul class="nav flex-column mb-auto">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <i class="bi bi-door-closed"></i>
+                  Cerrar sesión
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </header>
 
-    <div class="container-fluid">
-      <div class="row">
-        <!-- 6. Barra lateral de navegación -->
+      <!-- 7. Contenido principal -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
-          class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary"
-        >
-          <div
-            class="offcanvas-md offcanvas-end bg-body-tertiary"
-            tabindex="-1"
-            id="sidebarMenu"
-            aria-labelledby="sidebarMenuLabel"
-          >
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="offcanvas"
-                data-bs-target="#sidebarMenu"
-                aria-label="Close"
-              ></button>
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h2 class="h2">Inicio ---- Dashboard Técnico # Juan Perez</h2>
+          <button type="button" class="btn btn-primary">
+            Notifications <span class="badge text-bg-secondary">4</span>
+          </button>
+        </div>
+
+
+ <!-- 7.1 Contador de Tickets-->
+        <div class="contenedor-tickets d-flex justify-content-around">
+          <div class="caja bg-body-tertiary">
+              <h3>Contador Ticket Pendientes</h3>
+              <p class="numero">12</p>
+          </div>
+          <div class="caja bg-body-tertiary">
+              <h3>Contador Ticket En Progreso</h3>
+              <p class="numero">5</p>
+          </div>
+          <div class="caja bg-body-tertiary">
+              <h3>Contador Ticket Resueltos</h3>
+              <p class="numero">30</p>
+          </div>
+          <div class="caja bg-body-tertiary">
+              <h3>Tiempo Promedio de Resolución</h3>
+              <p class="numero">2h 15m</p>
+          </div>
+      </div>
+      <br>
+        <!-- 8. Sección para ver desempeño y tiempo promedio de resolución -->
+        <div class="container mt-2 align-items-center justify-content-center">
+          <h3 class="mb-6 mt-2">Desempeño y Tiempo Promedio de Resolución</h3>
+          <div class="contenedores d-flex justify-content-center">
+            
+            <div class="grafico izquierda">
+              <!-- Aquí va tu gráfico izquierdo -->
+              <div id="myPlot" style="width:75%;max-width:500px"></div>
+              <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+              <script>
+              const xArray = ["Pendientes", "En Progreso", "Resueltos"];
+              const yArray = [55, 49, 124];
+              
+              const layout = {title:"Tickets por Estado"};
+              
+              const data = [{labels:xArray, values:yArray, type:"pie"}];
+              
+              Plotly.newPlot("myPlot", data, layout);
+              </script>
             </div>
-            <div
-              class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto"
-            >
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a
-                    class="nav-link d-flex align-items-center gap-2 active"
-                    aria-current="page"
-                    href="#"
-                  >
-                    <i class="bi bi-1-circle"></i>
-                    Inicio
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link d-flex align-items-center gap-2"
-                    href="incidencias_tecnico.html"
-                  >
-                    <i class="bi bi-2-circle"></i>
-                    Incidencias
-                  </a>
-                </li>
-              </ul>
-              <hr class="my-3" />
-              <ul class="nav flex-column mb-auto">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
-                    <i class="bi bi-door-closed"></i>
-                    Cerrar sesión
-                  </a>
-                </li>
-              </ul>
+
+            <div class="grafico derecha">
+              <!-- Aquí va tu gráfico derecho -->
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+<script>
+const xValues = ["Hardware", "Software", "Red", "Accesos", "Dispositivos"];
+const yValues = [55, 49, 44, 24, 15];
+const barColors = ["red", "green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+
+    title: {
+      display: true,
+      text: "Incidencias 2025"
+    }
+  }
+});
+</script>
+            </div>
+          </div>
+          </div>
+        <br />
+        <!-- 9. Gestión de Incidencias -->
+        <div class="container">
+          <h2 class="mb-4">Gestión de Incidencias</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Estado</th>
+                <th>Fecha de Creación</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="incidenciasTable">
+              <!-- Las incidencias se cargarán aquí dinámicamente -->
+            </tbody>
+          </table>
+
+          <!-- Paginacion -->
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+              </li>
+              <li class="page-item">
+                <button class="page-link" onclick="cambiarPagina(1)">
+                  1
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" onclick="cambiarPagina(2)">
+                  2
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" onclick="cambiarPagina(3)">
+                  3
+                </button>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- 10. Modal para cambiar estado de la incidencia -->
+        <div class="modal fade" id="estadoModal" tabindex="-1" aria-labelledby="estadoModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="estadoModalLabel">
+                  Cambiar Estado de Incidencia
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="estadoForm">
+                  <div class="mb-3">
+                    <label for="estado" class="form-label">Nuevo Estado</label>
+                    <select class="form-select" id="estado" required>
+                      <option value="recibida">Recibida</option>
+                      <option value="en_proceso">En Proceso</option>
+                      <option value="cerrada">Cerrada</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Guardar Cambios
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- 7. Contenido principal -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-          >
-            <h2 class="h2">Inicio ---- Dashboard Técnico    # Juan Perez</h2>
-          </div>
-          <br />
-
-          <!-- 8. Sección para ver desempeño y tiempo promedio de resolución -->
-          <div class="container mt-2 align-items-center">
-            <h3 class="mb-4">Desempeño del Técnico</h3>
-            <div
-              class="row border border-2 rounded p-3 g-2 justify-content-center"
-            >
-              <div
-                class="col-md-5 col-10 border border-box rounded p-2 bg-body-secondary mb-3 mx-auto"
-              >
-                <h4>Pendientes</h4>
-                <p id="incidenciasPendientes">0</p>
+        <!-- 11. Modal para responder a clientes -->
+        <div class="modal fade" id="respuestaModal" tabindex="-1" aria-labelledby="respuestaModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="respuestaModalLabel">
+                  Responder a Cliente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-
-              <div
-                class="col-md-5 col-10 border border-box rounded p-2 bg-body-secondary mb-3 mx-auto"
-              >
-                <h4>En Progreso</h4>
-                <p id="incidenciasenProgreso">0</p>
-              </div>
-
-              <div
-                class="col-md-5 col-10 border border-box rounded p-2 bg-body-secondary mb-3 mx-auto"
-              >
-                <h4>Resueltas</h4>
-                <p id="incidenciasResueltas">0</p>
-              </div>
-
-              <div
-                class="col-md-5 col-10 border border-box rounded p-2 bg-body-secondary mb-3 mx-auto"
-              >
-                <h4>Tiempo Promedio de Resolución</h4>
-                <p id="tiempoPromedioResolucion">0 horas</p>
-              </div>
-            </div>
-          </div>
-          <br />
-         <!-- 9. Gestión de Incidencias -->
-          <div class="container">
-            <h2 class="mb-4">Gestión de Incidencias</h2>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Título</th>
-                  <th>Estado</th>
-                  <th>Fecha de Creación</th>
-                  <th>Descripción</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="incidenciasTable">
-                <!-- Las incidencias se cargarán aquí dinámicamente -->
-              </tbody>
-            </table>
-
-           <!-- Paginacion -->
-
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-end">
-                <li class="page-item disabled">
-                  <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item">
-                  <button class="page-link" onclick="cambiarPagina(1)">
-                    1
+              <div class="modal-body">
+                <form id="respuestaForm">
+                  <div class="mb-3">
+                    <label for="respuesta" class="form-label">Respuesta</label>
+                    <textarea class="form-control" id="respuesta" rows="3" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Enviar Respuesta
                   </button>
-                </li>
-                <li class="page-item">
-                  <button class="page-link" onclick="cambiarPagina(2)">
-                    2
-                  </button>
-                </li>
-                <li class="page-item">
-                  <button class="page-link" onclick="cambiarPagina(3)">
-                    3
-                  </button>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-          <!-- 10. Modal para cambiar estado de la incidencia -->
-          <div
-            class="modal fade"
-            id="estadoModal"
-            tabindex="-1"
-            aria-labelledby="estadoModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="estadoModalLabel">
-                    Cambiar Estado de Incidencia
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form id="estadoForm">
-                    <div class="mb-3">
-                      <label for="estado" class="form-label"
-                        >Nuevo Estado</label
-                      >
-                      <select class="form-select" id="estado" required>
-                        <option value="recibida">Recibida</option>
-                        <option value="en_proceso">En Proceso</option>
-                        <option value="cerrada">Cerrada</option>
-                      </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                      Guardar Cambios
-                    </button>
-                  </form>
-                </div>
+                </form>
               </div>
             </div>
           </div>
-          <!-- 11. Modal para responder a clientes -->
-          <div
-            class="modal fade"
-            id="respuestaModal"
-            tabindex="-1"
-            aria-labelledby="respuestaModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="respuestaModalLabel">
-                    Responder a Cliente
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form id="respuestaForm">
-                    <div class="mb-3">
-                      <label for="respuesta" class="form-label"
-                        >Respuesta</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="respuesta"
-                        rows="3"
-                        required
-                      ></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                      Enviar Respuesta
-                    </button>
-                  </form>
-                </div>
+        </div>
+        <!-- 12. Modal para ver detalles de la incidencia -->
+        <div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="detalleModalLabel">
+                  Detalles de la Incidencia
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="detalleModalBody">
+                <!-- Los detalles de la incidencia se cargarán aquí dinámicamente -->
               </div>
             </div>
           </div>
-          <!-- 12. Modal para ver detalles de la incidencia -->
-          <div
-            class="modal fade"
-            id="detalleModal"
-            tabindex="-1"
-            aria-labelledby="detalleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="detalleModalLabel">
-                    Detalles de la Incidencia
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body" id="detalleModalBody">
-                  <!-- Los detalles de la incidencia se cargarán aquí dinámicamente -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
-    <!-- 13. Enlaces a scripts de Bootstrap y Chart.js -->
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
-      integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
-      crossorigin="anonymous"
-    ></script>
+  </div>
+  <!-- 13. Enlaces a scripts de Bootstrap y Chart.js -->
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
+    integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
+    crossorigin="anonymous"></script>
 
-    <script src="dashboard.js"></script>
-    <script src="desempeñodelTecnico.js"></script>
-    <script src="gestiondeIncidencias.js"></script>
-    <script src="paginacion.js"></script>
-  </body>
+  <script src="dashboard.js"></script>
+  <script src="desempeñodelTecnico.js"></script>
+  <script src="gestiondeIncidencias.js"></script>
+  <script src="paginacion.js"></script>
+ 
+</body>
+
 </html>
