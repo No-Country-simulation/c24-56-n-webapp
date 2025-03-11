@@ -1,0 +1,33 @@
+<!-- Modal Cambiar Estado Incidencia -->
+                <div class="modal fade" id="estadoModal" tabindex="-1" aria-labelledby="estadoModalLabel">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="estadoModalLabel">
+                          <i class="bi bi-pencil-square me-2"></i>Actualizar Estado
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form id="estadoForm">
+                          <div class="mb-3">
+                            <label for="estadoSelect" class="form-label">Nuevo estado:</label>
+                            <select class="form-select" id="estadoSelect" required>
+                              <option value="recibida">Recibida</option>
+                              <option value="en_proceso">En Proceso</option>
+                              <option value="cerrada">Cerrada</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label for="comentarioEstado" class="form-label">Comentario:</label>
+                            <textarea class="form-control" id="comentarioEstado" rows="3" 
+                                      placeholder="Agregar comentario opcional..."></textarea>
+                          </div>
+                          <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Actualizar estado
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>

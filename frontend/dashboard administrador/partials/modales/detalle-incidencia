@@ -1,0 +1,51 @@
+<!-- Modal Detalles Incidencia -->
+                <div class="modal fade" id="detalleIncidenciaModal" tabindex="-1" aria-labelledby="detalleIncidenciaModalLabel">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header bg-info text-white">
+                        <h5 class="modal-title" id="detalleIncidenciaModalLabel">
+                          <i class="bi bi-file-text me-2"></i>Detalles completos
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                      </div>
+                      <div class="modal-body" id="detalleIncidenciaContent">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <h6 class="fw-bold">Información básica</h6>
+                            <ul class="list-unstyled">
+                              <li class="mb-2">
+                                <i class="bi bi-tag me-2"></i>
+                                <strong>ID:</strong> <span id="detalleId">-</span>
+                              </li>
+                              <li class="mb-2">
+                                <i class="bi bi-clock me-2"></i>
+                                <strong>Fecha:</strong> <span id="detalleFecha">-</span>
+                              </li>
+                              <li class="mb-2">
+                                <i class="bi bi-person me-2"></i>
+                                <strong>Reportado por:</strong> <span id="detalleUsuario">-</span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="col-md-8">
+                            <h6 class="fw-bold">Descripción</h6>
+                            <p id="detalleDescripcion">-</p>
+                            <div class="alert alert-warning small">
+                              <i class="bi bi-clock-history me-2"></i>
+                              <strong>Tiempo transcurrido:</strong> <span id="detalleTiempo">-</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <h6 class="fw-bold mt-4"><i class="bi bi-images me-2"></i>Archivos adjuntos</h6>
+                        <div class="row" id="detalleAdjuntos">
+                          <div class="col-4 text-center">
+                            <div class="placeholder-glow">
+                              <div class="placeholder col-12" style="height: 100px"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>

@@ -1,0 +1,44 @@
+<!-- Modal Editar/Crear Usuario -->
+<div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="editarUsuarioModalLabel">
+            <i class="bi bi-person-gear me-2"></i>Gestión de Usuario
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editarUsuarioForm" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="nombreUsuario" class="form-label">Nombre completo:</label>
+              <input type="text" class="form-control" id="nombreUsuario" required 
+                    pattern=".{5,50}" title="Entre 5 y 50 caracteres">
+            </div>
+            <div class="mb-3">
+              <label for="emailUsuario" class="form-label">Correo electrónico:</label>
+              <input type="email" class="form-control" id="emailUsuario" required>
+            </div>
+            <div class="mb-3">
+              <label for="rolUsuario" class="form-label">Rol del usuario:</label>
+              <select class="form-select" id="rolUsuario" required>
+                <option value="admin">Administrador</option>
+                <option value="tecnico">Técnico</option>
+                <option value="usuario">Usuario final</option>
+              </select>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-2"></i>Guardar cambios
+              </button>
+              <button type="button" class="btn btn-outline-danger" 
+                      data-bs-toggle="modal" data-bs-target="#confirmarAccionModal"
+                      data-accion="eliminar">
+                <i class="bi bi-trash me-2"></i>Eliminar usuario
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
