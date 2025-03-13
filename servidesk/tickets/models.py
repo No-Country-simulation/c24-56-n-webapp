@@ -19,6 +19,7 @@ class Ticket(models.Model):
     cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tickets_creados')
     # importar de tecnico esperar a Allan
     tecnico = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.SET_NULL, related_name='tickets_asignados', null = True, blank= True)
+    
     # categoria
     CATEGORIA_CHOICES = [
         ("SOFTWARE", "Software"),
@@ -26,7 +27,7 @@ class Ticket(models.Model):
         ("PERIFERICO", "Periferico"),
     ]
     
-    categoria = models.CharField(choices=CATEGORIA_CHOICES)
+    categoria = models.CharField(max_length=255, choices=CATEGORIA_CHOICES)
     fecha_creacion = models.DateTimeField(auto_now_add = True)
     fecha_actualizacion = models.DateTimeField(auto_now = True)
     
