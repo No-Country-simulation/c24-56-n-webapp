@@ -1,0 +1,147 @@
+<section id="tabla-incidencias" class="mb-5" aria-labelledby="incidenciasHeading">
+    <h2 id="incidenciasHeading" class="h4 mb-3">
+        <i class="bi bi-list-task me-2"></i>
+        Incidencias Recientes
+    </h2>
+    
+    <div class="table-responsive">
+        <table class="table table-hover align-middle" aria-label="Lista de incidencias">
+            <thead class="table-light">
+                <tr role="row">
+                    <th scope="col" role="columnheader">ID</th>
+                    <th scope="col" role="columnheader">Título</th>
+                    <th scope="col" role="columnheader">Estado</th>
+                    <th scope="col" role="columnheader">Fecha</th>
+                    <th scope="col" class="text-end" role="columnheader">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="incidenciasTable">
+                <!-- Incidencia 1 -->
+                <tr data-id="INC-001">
+                    <td data-label="ID">INC-001</td>
+                    <td data-label="Título">Impresora no funciona</td>
+                    <td data-label="Estado"><span class="badge bg-warning text-dark">Recibida</span></td>
+                    <td data-label="Fecha">2024-03-15</td>
+                    <td class="text-end" data-label="Acciones">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-primary btn-hover me-2" 
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Editar estado"
+                                    data-bs-toggle="modal"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#estadoModal"
+                                    data-incidencia-id="INC-001"
+                                    aria-label="Editar estado">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-sm btn-info btn-hover me-2" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Asignar técnico"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#asignarTecnicoModal"
+                                    data-incidencia-id="INC-001"
+                                    aria-label="Asignar técnico">
+                                <i class="bi bi-person-plus"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success btn-hover" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Abrir chat"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#chatModal"
+                                    data-incidencia-id="INC-001"
+                                    aria-label="Abrir chat">
+                                <i class="bi bi-chat"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                
+                <!-- Incidencia 2 -->
+                <tr data-id="INC-002">
+                    <td data-label="ID">INC-002</td>
+                    <td data-label="Título">Error en software contable</td>
+                    <td data-label="Estado"><span class="badge bg-info text-white">En Proceso</span></td>
+                    <td data-label="Fecha">2024-03-14</td>
+                    <td class="text-end" data-label="Acciones">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-primary btn-hover me-2" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Editar estado"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#estadoModal"
+                                    data-incidencia-id="INC-002"
+                                    aria-label="Editar estado">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-sm btn-info btn-hover me-2" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Asignar técnico"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#asignarTecnicoModal"
+                                    data-incidencia-id="INC-002"
+                                    aria-label="Asignar técnico">
+                                <i class="bi bi-person-plus"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success btn-hover" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Abrir chat"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#chatModal"
+                                    data-incidencia-id="INC-002"
+                                    aria-label="Abrir chat">
+                                <i class="bi bi-chat"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                
+                <!-- Incidencia 3 -->
+                <tr data-id="INC-003">
+                    <td data-label="ID">INC-003</td>
+                    <td data-label="Título">Red lenta en oficina</td>
+                    <td data-label="Estado"><span class="badge bg-success text-white">Cerrada</span></td>
+                    <td data-label="Fecha">2024-03-13</td>
+                    <td class="text-end" data-label="Acciones">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-primary btn-hover me-2" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Editar estado"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#estadoModal"
+                                    data-incidencia-id="INC-003"
+                                    aria-label="Editar estado">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-sm btn-info btn-hover me-2" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Asignar técnico"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#asignarTecnicoModal"
+                                    data-incidencia-id="INC-003"
+                                    aria-label="Asignar técnico">
+                                <i class="bi bi-person-plus"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success btn-hover" 
+                                    data-bs-toggle="modal"
+                                    data-bs-tooltip="tooltip"
+                                    data-bs-title="Abrir chat"
+                                    data-bs-placement="top" 
+                                    data-bs-target="#chatModal"
+                                    data-incidencia-id="INC-003"
+                                    aria-label="Abrir chat">
+                                <i class="bi bi-chat"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

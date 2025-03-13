@@ -1,0 +1,61 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 sidebar offcanvas-md offcanvas-start bg-body-tertiary">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">ServiDesk</h5>
+        <button type="button" class="btn-close" 
+                data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
+    </div>
+    
+    <div class="offcanvas-body p-3 pt-lg-3">
+        <!-- Menú principal -->
+        <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)" 
+              onclick="handleMenuClick('dashboard')">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#tabla-incidencias">
+                    <i class="bi bi-ticket-detailed"></i>
+                    Incidencias
+                    <span class="badge bg-danger ms-auto">3</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#gestion-usuarios">
+                    <i class="bi bi-people"></i>
+                    Usuarios
+                    <span class="badge bg-primary ms-auto">3</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#config-alertas">
+                    <i class="bi bi-bell"></i>
+                    Alertas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#reportes">
+                    <i class="bi bi-graph-up"></i>
+                    Reportes
+                </a>
+            </li>
+        </ul>
+
+        <hr class="my-3">
+
+        <!-- Menú secundario -->
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#configuracion">
+                    <i class="bi bi-gear"></i>
+                    Configuración
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="#" id="logoutButton">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Cerrar sesión
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

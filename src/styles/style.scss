@@ -1,0 +1,29 @@
+// Variables de color principales
+$primary: #2A5C82;
+$secondary: #5B8FB9;
+$success: #28a745;
+$warning: #ffc107;
+$danger: #dc3545;
+$dark: #1a1a1a;
+$light: #f8f9fa;
+
+// Importar Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Estilos base
+body {
+  background-color: #f4f6f9;
+  font-family: 'Poppins', sans-serif;
+}
+
+// Layout principal
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+
+  .main-panel {
+    flex: 1;
+    margin-left: 260px; // Ancho de la sidebar
+    transition: all 0.3s;
+  }
+}

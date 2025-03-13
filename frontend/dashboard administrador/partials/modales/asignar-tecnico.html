@@ -1,0 +1,33 @@
+<!-- Modal Asignar Técnico -->
+<div class="modal fade" id="asignarTecnicoModal" tabindex="-1" aria-labelledby="asignarTecnicoModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="asignarTecnicoModalLabel">
+            <i class="bi bi-person-plus me-2"></i>Asignar Técnico
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="asignarTecnicoForm">
+            <div class="mb-3">
+              <label for="tecnicoSelect" class="form-label">Técnico disponible:</label>
+              <select class="form-select" id="tecnicoSelect" required>
+                <option value="">Seleccionar técnico...</option>
+                <option value="tec1">Juan Pérez 🟢 Disponible</option>
+                <option value="tec2">María Gómez 🔴 Ocupada</option>
+                <option value="tec3">Carlos Ruiz 🟢 Disponible</option>
+              </select>
+            </div>
+            <div class="alert alert-warning small">
+              <i class="bi bi-info-circle me-2"></i>
+              Los técnicos ocupados tienen asignadas 3 o más incidencias
+            </div>
+            <button type="submit" class="btn btn-info w-100">
+              <i class="bi bi-save me-2"></i>Guardar asignación
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
