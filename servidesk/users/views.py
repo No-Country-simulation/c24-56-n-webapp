@@ -1,33 +1,121 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import CustomUserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from .serializers import UserRegisterSerializer
+from datetime import timedelta
+from .models import ActiveToken, BlacklistedToken
+from django.contrib.auth import get_user_model
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def user_profile_view(request):
-    """
-    View para obtener el perfil del usuario autenticado.
-    """
-    if not request.user.is_authenticated:
-        return Response({'detail': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
-    
-    user = request.user
-    serializer = CustomUserSerializer(user)
-    return Response(serializer.data)
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-from django.conf import settings
-from django.http import HttpResponseRedirect
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        if self.context['request'].data.get('remember_me'):
+            # Aumentar la duración del token si "Remember Me" está marcado
+            self.token.set_exp(lifetime=timedelta(days=7))  # Ejemplo: 7 días
+        return data
 
-def email_confirm_redirect(request, key):
-    return HttpResponseRedirect(
-        f"{settings.EMAIL_CONFIRM_REDIRECT_BASE_URL}{key}/"
-    )
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
-def password_reset_confirm_redirect(request, uidb64, token):
-    return HttpResponseRedirect(
-        f"{settings.PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL}{uidb64}/{token}/"
-    )
+    def post(self, request, *args, **kwargs):
+        # Llama al método post de la clase base para obtener la respuesta
+        response = super().post(request, *args, **kwargs)
+        
+        # Verifica si la respuesta es exitosa (código 200)
+        if response.status_code == 200:
+            # Obtén el email del usuario desde la solicitud
+            email = request.data.get('email')
+            
+            # Busca el usuario en la base de datos
+            User = get_user_model()
+            user = User.objects.get(email=email)
+            
+            # Obtén el access_token y el refresh_token de la respuesta
+            access_token = response.data['access']
+            refresh_token = response.data['refresh']
+            
+            # Registra ambos tokens en la tabla ActiveToken
+            ActiveToken.objects.create(user=user, token=access_token)
+            ActiveToken.objects.create(user=user, token=refresh_token)
+        
+        return response
+
+class LogoutView(APIView):
+    def post(self, request):
+        try:
+            access_token = request.data.get('access_token')
+            refresh_token = request.data.get('refresh_token')
+
+            # Verifica que ambos tokens estén presentes
+            if not access_token or not refresh_token:
+                return Response(
+                    {"error": "Se requieren tanto el access_token como el refresh_token."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Verifica si los tokens ya están en la lista negra
+            if (BlacklistedToken.objects.filter(token=access_token).exists() or
+                BlacklistedToken.objects.filter(token=refresh_token).exists()):
+                return Response(
+                    {"error": "Uno o ambos tokens ya han sido invalidados."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Verifica si los tokens son válidos
+            try:
+                # Verifica el refresh_token
+                refresh_token_obj = RefreshToken(refresh_token)
+                refresh_token_obj.verify()
+
+                # Verifica el access_token
+                access_token_obj = AccessToken(access_token)
+                access_token_obj.verify()
+            except Exception as e:
+                return Response(
+                    {"error": "Uno o ambos tokens son inválidos."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Almacena ambos tokens en la lista negra
+            BlacklistedToken.objects.create(token=access_token)
+            BlacklistedToken.objects.create(token=refresh_token)
+
+            # Elimina ambos tokens de la tabla ActiveToken
+            ActiveToken.objects.filter(token__in=[access_token, refresh_token]).delete()
+
+            return Response(
+                {"message": "Sesión cerrada exitosamente."},
+                status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+class ActiveSessionsView(APIView):
+    def get(self, request):
+        # Obtén todos los tokens activos que no están en la lista negra
+        active_tokens = ActiveToken.objects.exclude(token__in=BlacklistedToken.objects.values_list('token', flat=True))
+        
+        # Formatea la respuesta
+        sessions = []
+        for token in active_tokens:
+            sessions.append({
+                "user": token.user.email,
+                "token": token.token,
+                "created_at": token.created_at
+            })
+        
+        return Response({"active_sessions": sessions}, status=status.HTTP_200_OK)

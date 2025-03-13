@@ -1,48 +1,39 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
 from .models import CustomUser
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    """
-    Serializador para el modelo CustomUser.
-    """
-    password = serializers.CharField(write_only=True)  # Asegúrate de incluir el campo password
+User = get_user_model()
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    confirm_password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ['id', 'email', 'username', 'password', 'first_name', 'last_name', 'rol']
-        extra_kwargs = {
-            'email': {'required': True},
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-            'rol': {'required': True},
-            'username': {'required': False},  # Opcional si decides mantenerlo
-        }
+        model = User
+        fields = [
+            'first_name', 'last_name', 'phone_number', 'email',
+            'password', 'confirm_password', 'role',
+        ]
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['confirm_password']:
+            raise serializers.ValidationError({"password": "Las contraseñas no coinciden."})
+        return attrs
+    
+    def validate_role(self, value):
+        # Verifica que el valor de "role" esté en las opciones permitidas
+        valid_roles = [choice[0] for choice in CustomUser.ROLE_CHOICES]
+        if value not in valid_roles:
+            raise serializers.ValidationError("Rol no válido.")
+        return value
 
     def create(self, validated_data):
-        """
-        Crea y retorna un nuevo usuario con los datos validados.
-        """
-        user = CustomUser.objects.create_user(
-            email=validated_data['email'],
-            password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            rol=validated_data['rol'],
-            username=validated_data.get('username', None),  # Manejo opcional
-        )
+        validated_data.pop('confirm_password')
+        user = User.objects.create_user(**validated_data)
         return user
-
-    def update(self, instance, validated_data):
-        """
-        Actualiza y retorna un usuario existente con los datos validados.
-        """
-        instance.email = validated_data.get('email', instance.email)
-        instance.username = validated_data.get('username', instance.username)  # Manejo opcional
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.rol = validated_data.get('rol', instance.rol)
-
-        if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
-        instance.save()
-        return instance
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop('password', None)
+        return representation

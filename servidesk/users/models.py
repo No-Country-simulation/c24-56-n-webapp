@@ -1,74 +1,51 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.exceptions import ValidationError
-
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        """
-        Crea y guarda un usuario con el email y la contraseña proporcionados.
-        """
-        if not email:
-            raise ValueError('El email es obligatorio')
-        if not extra_fields.get('first_name'):
-            raise ValueError('El nombre es obligatorio')
-        if not extra_fields.get('last_name'):
-            raise ValueError('El apellido es obligatorio')
-        if 'rol' not in extra_fields:
-            raise ValueError('El rol es obligatorio')
-
-        # Validar que el rol sea uno de los valores permitidos
-        valid_roles = [choice[0] for choice in CustomUser.ROL_CHOICES]
-        if extra_fields.get('rol') not in valid_roles:
-            raise ValueError('El rol no es válido')
-
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password=None, **extra_fields):
-        """
-        Crea y guarda un superusuario con el email y la contraseña proporcionados.
-        """
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('El superusuario debe tener is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('El superusuario debe tener is_superuser=True.')
-
-        return self.create_user(email, password, **extra_fields)
+from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
-    CLIENTE = 'C'
-    TECNICO = 'T'
-    ADMINISTRADOR = 'A'
+    
+    username = None
+    first_name = models.CharField(max_length=30, verbose_name='Nombre')
+    last_name = models.CharField(max_length=30, verbose_name='Apellido')
+    phone_number = models.CharField(max_length=15, verbose_name='Teléfono')
+    email = models.EmailField(unique=True, verbose_name='Email')
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number']
 
-    ROL_CHOICES = [
-        (CLIENTE, 'Cliente'),
-        (TECNICO, 'Técnico'),
-        (ADMINISTRADOR, 'Administrador'),
+    ADMINISTRADOR = "A"
+    TECNICO = "T"
+    CLIENTE = "C"
+    ROLE_CHOICES = [
+        (ADMINISTRADOR, "Administrador"),
+        (TECNICO, "Técnico"),
+        (CLIENTE, "Cliente"),
     ]
 
-    email = models.EmailField(unique=True, null=False, blank=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'rol']
-
-    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default=CLIENTE)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=CLIENTE, verbose_name='Rol')
 
     objects = CustomUserManager()
-
+    
+    def __str__(self):
+        return f"{self.email} ({self.get_role_display()})"
+    
     def clean(self):
-        """
-        Valida que el rol sea uno de los valores permitidos.
-        """
         super().clean()
-        valid_roles = [choice[0] for choice in self.ROL_CHOICES]
-        if self.rol not in valid_roles:
-            raise ValidationError({'rol': 'El rol no es válido'})
+        if self.role not in [choice[0] for choice in self.ROLE_CHOICES]:
+            raise ValidationError({"role": "Rol no válido."})
+        
+class BlacklistedToken(models.Model):
+    token = models.CharField(max_length=500, unique=True)  # Almacena el token JWT
+    timestamp = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación
 
     def __str__(self):
-        return f'{self.email} ({self.get_rol_display()})'
+        return f"Token invalidado el {self.timestamp}"
+
+class ActiveToken(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='active_tokens')
+    token = models.CharField(max_length=500, unique=True)  # Almacena el token JWT
+    created_at = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación
+
+    def __str__(self):
+        return f"Token activo para {self.user.email} creado el {self.created_at}"
