@@ -42,25 +42,33 @@
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close" title="Close"></button>
             </div>
             <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+              <ul class="nav flex-column">       
+                  <li class="nav-item">
+                    <div class="img-container">
+                        <img src="./img/logo.png" alt="logo" style="width: 100px; height: 100px;" margin="auto">
+                    </div>
+                  </li>
+                </div>
+             <hr class="my-3">
+            <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">           
               <ul class="nav flex-column">
                 <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" href="index_cliente.html">
-                    <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                    <i class="bi bi-file-earmark-arrow-up"></i>
                     Nuevo Ticket
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" href="historico_cliente.html">
-                    <i class="bi bi-folder2-open"></i>
+                    <i class="bi bi-file-bar-graph"></i>
                     Historico de Tickets
                   </a>
                 </li>
-              </ul>
-              <hr class="my-3">
+              </ul>          
               <ul class="nav flex-column mb-auto">
                 <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
-                    <svg class="bi"><use xlink:href="#door-closed"/></svg>
+                  <a class="nav-link d-flex align-items-center gap-2" href="../sign-in/index.html">
+                    <i class="bi bi-box-arrow-left"></i>
                     Sign out
                   </a>
                 </li>
@@ -89,7 +97,7 @@
                     <th>Fecha</th>
                     <th>Categoría</th>
                     <th>Archivo</th>
-                    <th>Acciones</th>
+                    <th >Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="tablaDatos">

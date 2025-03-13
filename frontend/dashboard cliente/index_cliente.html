@@ -42,36 +42,43 @@
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-              <ul class="nav flex-column">
-               
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="index_cliente.html">
-                    <svg class="bi"><use xlink:href="#file-earmark"/></svg>
-                    Nuevo Ticket
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="historico_cliente.html">
-                    <i class="bi bi-folder2-open"></i>
-                    Historico de Tickets
-                  </a>
-                </li>
-              </ul>
-              <hr class="my-3">
-              <ul class="nav flex-column mb-auto">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
-                    <svg class="bi"><use xlink:href="#door-closed"/></svg>
-                    Sign out
-                  </a>
-                </li>
-              </ul>
+              <ul class="nav flex-column">       
+                  <li class="nav-item">
+                    <div class="img-container">
+                        <img src="./img/logo.png" alt="logo" style="width: 100px; height: 100px;" margin="auto">
+                    </div>
+                  </li>
+                
+                 <hr class="my-3">       
+               <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="index_cliente.html">
+                      <i class="bi bi-file-earmark-arrow-up"></i>
+                      Nuevo Ticket
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="historico_cliente.html">
+                      <i class="bi bi-file-bar-graph"></i>
+                      Historico de Tickets
+                    </a>
+                  </li>
+              </ul>     
+           
+            <ul class="nav flex-column mb-auto">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="../sign-in/index.html">
+                  <i class="bi bi-box-arrow-left"></i>
+                  Sign out
+                </a>
+              </li>
+            </ul>
             </div>
           </div>
         </div>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Dashboard Cliente #1000 #Juan Perez</h1>
+            <h1 class="h2">Dashboard Cliente</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group me-2">
                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -82,7 +89,7 @@
           <div class="container">
             <div class="form-container">
               <h2 class="text-center mb-4">Reportar Incidencia</h2>
-              <form id="incidentForm">
+              <form id="incidentForm" class="mx-auto" style="max-width: 600px;" onsubmit="handleSubmit(event)">
                 <div class="mb-3">
                   <label for="title" class="form-label">Título:</label>
                   <input type="text" class="form-control" id="title" name="title" required>
@@ -112,18 +119,42 @@
                   <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
               </form>
-              <div class="success-message" id="successMsg">
-                ✅ Formulario enviado correctamente!
-              </div>
             </div>
-     
-   
           </div>
         </main>
       </div>
     </div>
+
+    <!-- Modal para mostrar el mensaje de éxito -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ✅ Formulario enviado correctamente!
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="/frontend/assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
     <script src="dashboard.js"></script>
+    
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+        // Mostrar el modal de éxito
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+      }
+    </script>
   </body>
 </html>
