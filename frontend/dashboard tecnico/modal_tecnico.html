@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <!-- Enlace a los estilos de Bootstrap -->
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Enlace a los iconos de Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Modal para cambiar estado de la incidencia -->
+    <div
+      class="modal fade"
+      id="estadoModal"
+      tabindex="-1"
+      aria-labelledby="estadoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="estadoModalLabel">
+              Cambiar Estado de Incidencia
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="estadoForm">
+              <div class="mb-3">
+                <label for="estado" class="form-label">Nuevo Estado</label>
+                <select class="form-select" id="estado" required>
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="En Progreso">En Progreso</option>
+                  <option value="Resuelto">Resuelto</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Guardar Cambios
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para responder a clientes -->
+    <div
+      class="modal fade"
+      id="respuestaModal"
+      tabindex="-1"
+      aria-labelledby="respuestaModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="respuestaModalLabel">
+              Responder a Cliente
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="respuestaForm">
+              <div class="mb-3">
+                <label for="respuesta" class="form-label">Respuesta</label>
+                <textarea
+                  class="form-control"
+                  id="respuesta"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Enviar Respuesta
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para ver detalles de la incidencia -->
+    <div
+      class="modal fade"
+      id="detalleModal"
+      tabindex="-1"
+      aria-labelledby="detalleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="detalleModalLabel">
+              Detalles de la Incidencia
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="detalleModalBody">
+            <!-- Los detalles de la incidencia se cargarán aquí dinámicamente -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para cambiar estado de la incidencia -->
+    <div
+      class="modal fade"
+      id="estadoModal"
+      tabindex="-1"
+      aria-labelledby="estadoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="estadoModalLabel">
+              Cambiar Estado de Incidencia
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="estadoForm">
+              <div class="mb-3">
+                <label for="estado" class="form-label">Nuevo Estado</label>
+                <select class="form-select" id="estado" required>
+                  <option value="recibida">Recibida</option>
+                  <option value="en_proceso">En Proceso</option>
+                  <option value="cerrada">Cerrada</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Guardar Cambios
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enlace al script de Bootstrap -->
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

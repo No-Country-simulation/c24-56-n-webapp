@@ -46,3 +46,59 @@
 .navbar .form-control {
   padding: .75rem 1rem;
 }
+
+.contenedores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Ajustes adicionales según tu diseño */
+}
+
+.grafico {
+  width: 45%; /* Ajusta el ancho según tus necesidades */
+  /* Otros estilos como márgenes, bordes, etc. */
+}
+
+.grafico.izquierda {
+  order: 1; /* Controla el orden visual si usas flexbox */
+}
+
+.grafico.derecha {
+  order: 2; /* Controla el orden visual si usas flexbox */
+}
+
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.contenedor-tickets {
+  display: flex;
+  gap: 20px; /* Espaciado entre las cajas */
+}
+
+.caja {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 200px;
+}
+
+.caja h3 {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.numero {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+}

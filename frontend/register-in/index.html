@@ -154,6 +154,7 @@
           <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
           <label for="floatingEmail">Email</label>
         </div>
+
         <div class="form-floating">
           <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
           <label for="floatingPassword">Contraseña</label>
@@ -162,7 +163,15 @@
           <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password">
           <label for="floatingConfirmPassword">Confirma Contraseña</label>
         </div>
-
+<div class="form-floating">
+  <select class="form-select" id="floatingRole" aria-label="Role">
+    <option selected>Selecciona tu rol</option>
+    <option value="Administrador">Administrador</option>
+    <option value="Tecnico">Tecnico</option>
+    <option value="Cliente">Cliente</option>
+  </select>
+  <label for="floatingRole">Rol</label>
+</div>
         <button class="btn btn-primary w-100 py-2" type="submit">Registrar</button>
         <p class="mt-5 mb-3 text-body-secondary">&copy; 2025</p>
       </form>
