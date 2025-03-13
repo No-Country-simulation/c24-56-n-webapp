@@ -45,6 +45,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.BlacklistMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -145,3 +146,8 @@ SIMPLE_JWT = {
     'SIGNING_KEY': 'tu_clave_secreta',
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",  # Backend
+    "http://127.0.0.1:5500",  # Frontend (Live Server)
+]

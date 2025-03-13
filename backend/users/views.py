@@ -1,13 +1,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from .serializers import UserRegisterSerializer
+from .serializers import UserRegisterSerializer, UserProfileSerializer
 from datetime import timedelta
 from .models import ActiveToken, BlacklistedToken
 from django.contrib.auth import get_user_model
+from django.db import transaction
 
 class RegisterView(APIView):
     def post(self, request):
@@ -72,27 +74,14 @@ class LogoutView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Verifica si los tokens son válidos
-            try:
-                # Verifica el refresh_token
-                refresh_token_obj = RefreshToken(refresh_token)
-                refresh_token_obj.verify()
+            # Usar una transacción para garantizar atomicidad
+            with transaction.atomic():
+                # Almacena ambos tokens en la lista negra
+                BlacklistedToken.objects.create(token=access_token)
+                BlacklistedToken.objects.create(token=refresh_token)
 
-                # Verifica el access_token
-                access_token_obj = AccessToken(access_token)
-                access_token_obj.verify()
-            except Exception as e:
-                return Response(
-                    {"error": "Uno o ambos tokens son inválidos."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            # Almacena ambos tokens en la lista negra
-            BlacklistedToken.objects.create(token=access_token)
-            BlacklistedToken.objects.create(token=refresh_token)
-
-            # Elimina ambos tokens de la tabla ActiveToken
-            ActiveToken.objects.filter(token__in=[access_token, refresh_token]).delete()
+                # Elimina ambos tokens de la tabla ActiveToken
+                ActiveToken.objects.filter(token__in=[access_token, refresh_token]).delete()
 
             return Response(
                 {"message": "Sesión cerrada exitosamente."},
@@ -100,9 +89,10 @@ class LogoutView(APIView):
             )
         except Exception as e:
             return Response(
-                {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST
+                {"error": f"Error al cerrar la sesión: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
 
 class ActiveSessionsView(APIView):
     def get(self, request):
@@ -119,3 +109,11 @@ class ActiveSessionsView(APIView):
             })
         
         return Response({"active_sessions": sessions}, status=status.HTTP_200_OK)
+    
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]  # Solo usuarios autenticados pueden acceder
+
+    def get(self, request):
+        user = request.user  # Obtiene el usuario autenticado
+        serializer = UserProfileSerializer(user)  # Serializa los datos del usuario
+        return Response(serializer.data)

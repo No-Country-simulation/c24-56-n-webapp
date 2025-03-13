@@ -37,3 +37,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation.pop('password', None)
         return representation
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'first_name', 'last_name', 'phone_number', 'role']

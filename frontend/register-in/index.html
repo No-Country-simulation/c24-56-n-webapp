@@ -135,20 +135,20 @@
     </div>
 
     <main class="form-signin w-100 m-auto">
-      <form id="registerForm">
+      <form id="registerForm" onsubmit="registerUser(event)">
         <img class="mb-4" src="/frontend/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Por favor registrate</h1>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+          <input type="text" class="form-control" id="floatingName" placeholder="Nombre">
           <label for="floatingName">Nombre</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+          <input type="text" class="form-control" id="floatingLastName" placeholder="Apellido">
           <label for="floatingName">Apellido</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+          <input type="text" class="form-control" id="floatingPhone" placeholder="Teléfono">
           <label for="floatingName">Telefono</label>
         <div class="form-floating">
           <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
@@ -166,39 +166,19 @@
 <div class="form-floating">
   <select class="form-select" id="floatingRole" aria-label="Role">
     <option selected>Selecciona tu rol</option>
-    <option value="Administrador">Administrador</option>
-    <option value="Tecnico">Tecnico</option>
-    <option value="Cliente">Cliente</option>
+    <option value="A">Administrador</option>
+    <option value="T">Tecnico</option>
+    <option value="C">Cliente</option>
   </select>
   <label for="floatingRole">Rol</label>
 </div>
         <button class="btn btn-primary w-100 py-2" type="submit">Registrar</button>
-        <p class="mt-5 mb-3 text-body-secondary">&copy; 2025</p>
+        <p class="mt-3 mb-2 text-body-secondary">¿Ya tienes una cuenta? <a href="../sign-in/index.html">Inicia Sesión</a></p>
+        <p class="mt-1 mb-3 text-body-secondary">&copy; 2025</p>
       </form>
     </main>
     <script src="/frontend/assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      document.getElementById('registerForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Aquí deberías agregar la lógica para registrar al usuario
-        // Por ejemplo, podrías hacer una llamada AJAX a tu servidor para registrar al usuario
-
-        // Simulación de registro de usuario
-        var userName = document.getElementById('floatingName').value;
-        var userEmail = document.getElementById('floatingEmail').value;
-        var userPassword = document.getElementById('floatingPassword').value;
-        var userConfirmPassword = document.getElementById('floatingConfirmPassword').value;
-
-        if (userPassword !== userConfirmPassword) {
-          alert('Passwords do not match');
-          return;
-        }
-
-        // Aquí puedes agregar la lógica para guardar los datos del usuario en tu servidor
-
-        // Redirigir al usuario a la página de inicio de sesión después del registro
-       window.location.href = '/frontend/sign-in/index.html';
-      });
-    </script>
+    <script src="/frontend/assets/js/register.js"></script>
+    <script src="/frontend/assets/js/is_authenticated_redirect.js"></script>
   </body>
 </html>
