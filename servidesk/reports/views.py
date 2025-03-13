@@ -1,22 +1,20 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from tickets.models import Ticket  
+from tickets.models import Ticket
 
 class ReportesTicketsView(APIView):
     def get(self, request):
         # Inicializar contadores
         estados = {
-            'resueltos': 0,
-            'pendientes': 0,
-            'en_progreso': 0
+            'RESUELTO': 0,
+            'PENDIENTE': 0,
+            'EN_PROGRESO': 0
         }
         categorias = {
-            'hardware': 0,
-            'software': 0,
-            'red': 0,
-            'accesos': 0,
-            'dispositivos': 0
+            'HARDWARE': 0,
+            'SOFTWARE': 0,
+            'PERIFERICO': 0,
         }
         
         # Obtener todos los tickets
@@ -27,10 +25,10 @@ class ReportesTicketsView(APIView):
             estado = ticket.estado
             categoria = ticket.categoria
             
-            if estado in estados:
+            if estado in estados.keys():
                 estados[estado] += 1
             
-            if categoria in categorias:
+            if categoria in categorias.keys():
                 categorias[categoria] += 1
         
         # Crear la respuesta con los contadores
