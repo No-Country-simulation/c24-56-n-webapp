@@ -1,4 +1,9 @@
 /* globals Chart:false */
+import { redirectToLoginIfNotAuthenticated } from "../assets/js/auth";
+
+document.addEventListener('DOMContentLoaded', () => {
+  redirectToLoginIfNotAuthenticated(); // Redirige si no está autenticado
+});
 
 (() => {
   "use strict";

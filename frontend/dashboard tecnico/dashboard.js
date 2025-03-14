@@ -1,3 +1,9 @@
+import { redirectToLoginIfNotAuthenticated } from "../assets/js/auth";
+
+document.addEventListener('DOMContentLoaded', () => {
+  redirectToLoginIfNotAuthenticated(); // Redirige si no está autenticado
+});
+
 //////a partir de aca lo estoy revisando al index_tecnico.htm
 // // 8. Sección para ver desempeño y tiempo promedio de resolución
 //este Script consume datos de la tabla

@@ -1,3 +1,9 @@
+import { redirectToLoginIfNotAuthenticated } from "../assets/js/auth.js";
+
+document.addEventListener('DOMContentLoaded', () => {
+  redirectToLoginIfNotAuthenticated(); // Redirige si no está autenticado
+});
+
 // data-manager.js
 class DataManager {
   static init() {

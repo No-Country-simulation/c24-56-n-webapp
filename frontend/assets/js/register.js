@@ -1,3 +1,13 @@
+import { isAuthenticated } from "./auth";
+import { redirectToDashboard } from "./login";
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (isAuthenticated()) {
+    const userRole = localStorage.getItem('user_role'); // Obtener rol del usuario
+    redirectToDashboard(userRole); // Redirigir al dashboard correspondiente
+  }
+});
+
 async function registerUser(event) {
   event.preventDefault();
 

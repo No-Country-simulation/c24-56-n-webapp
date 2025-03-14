@@ -33,28 +33,30 @@ async function loginUser(event) {
     }
   }
   
-  async function getUserRole(accessToken) {
-    const response = await fetch('http://localhost:8000/api/users/me/', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-      },
-    });
-  
-    if (response.ok) {
-      const userData = await response.json();
-      return userData.role;
-    } else {
-      throw new Error('Error al obtener el rol del usuario');
-    }
+async function getUserRole(accessToken) {
+  const response = await fetch('http://localhost:8000/api/users/me/', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+    },
+  });
+
+  if (response.ok) {
+    const userData = await response.json();
+    return userData.role;
+  } else {
+    throw new Error('Error al obtener el rol del usuario');
   }
-  
-  function redirectToDashboard(role) {
-    if (role === 'A') {
-      window.location.href = '/frontend/dashboard administrador/index_administrador.html';
-    } else if (role === 'T') {
-      window.location.href = '/frontend/dashboard tecnico/index_tecnico.html';
-    } else if (role === 'C') {
-      window.location.href = '/frontend/dashboard cliente/index_cliente.html';
-    }
+}
+
+function redirectToDashboard(role) {
+  if (role === 'A') {
+    window.location.href = '/frontend/dashboard administrador/index_administrador.html';
+  } else if (role === 'T') {
+    window.location.href = '/frontend/dashboard tecnico/index_tecnico.html';
+  } else if (role === 'C') {
+    window.location.href = '/frontend/dashboard cliente/index_cliente.html';
   }
+}
+
+export {redirectToDashboard};
